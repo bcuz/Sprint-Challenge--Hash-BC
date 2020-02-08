@@ -9,7 +9,8 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
   ht = HashTable(16)
 
-    
+  for i in range(len(weights)):
+    print(weights[i], i)
 
   return None
 
@@ -19,3 +20,6 @@ def print_answer(answer):
     print(str(answer[0] + " " + answer[1]))
   else:
     print("None")
+
+weights_2 = [4, 4]
+answer_2 = get_indices_of_item_weights(weights_2, 2, 8)
