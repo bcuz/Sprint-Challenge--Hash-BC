@@ -35,9 +35,9 @@ def proof_of_work(last_proof):
     hash_string = hash_object.hexdigest()
 
     # use a random integer.
-    proof = random.randint(-1000000000000000000, 100000000000000000) 
+    proof = 0
     while valid_proof(hash_string, proof) is False:
-        proof = random.randint(-1000000000000000000, 100000000000000000) 
+        proof -= 2
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -51,8 +51,9 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-
-    guess = f'{last_hash}{proof}'.encode()
+    guess = json.dumps(proof)
+    # guess = f'{last_hash}{proof}'.encode()
+    guess = guess.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
     return guess_hash[:6] == last_hash[-6:]
 
