@@ -14,13 +14,16 @@ def get_indices_of_item_weights(weights, length, limit):
 
   # it overwrites the weight, tho, if there's a dup
   # as it should. like the advice is flipped..
-  print(ht.storage)
+  for i in range(len(ht.storage)):
+    if ht.storage[i] != None:
+      print(ht.storage[i].key, hash_table_retrieve(ht, ht.storage[i].key))
 
-  # for item in ht.storage:
-  #   current = item
-  #   while current is not None:
-  #     print(current.key, current.value)
-  #     current = current.next
+  # print(ht.storage)
+  # # for item in ht.storage:
+  # current = ht.storage[0]
+  # while current is not None:
+  #   print(current.key, current.value)
+  #   current = current.next
 
   return None
 
