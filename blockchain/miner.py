@@ -37,7 +37,7 @@ def proof_of_work(last_proof):
     # use a random integer.
     proof = 0
     while valid_proof(hash_string, proof) is False:
-        proof -= 2
+        proof -= .01
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
