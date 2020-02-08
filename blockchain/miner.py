@@ -1,5 +1,6 @@
 import hashlib
 import requests
+import json
 
 import sys
 
@@ -23,8 +24,20 @@ def proof_of_work(last_proof):
     start = timer()
 
     print("Searching for next proof")
+
+    # need to hash the last proof
+
+    string_object = json.dumps(last_proof)
+    # Create the block_string
+    block_string = string_object.encode()
+
+    hash_object = hashlib.sha256(block_string)
+    hash_string = hash_object.hexdigest()
+
+    # use a random integer.
     proof = 0
-    #  TODO: Your code here
+    while valid_proof(hash_string, proof) is False:
+        proof += 1
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
