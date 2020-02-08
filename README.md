@@ -27,6 +27,8 @@ Explain in detail the workings of a dynamic array:
 * What is the worse case scenario if you try to extend the storage size of a dynamic array?
 
 Explain how a blockchain is structured. What are the blocks, what is the chain? How is the data organized?
+
+A blockchain is a chain made up of blocks. Any new block added to the chain is created by combining a proof and some data about the chain's last block. A proof is difficult to come up with, but easy to validate.
  
 Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
 
