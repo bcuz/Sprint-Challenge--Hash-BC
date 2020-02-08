@@ -30,6 +30,8 @@ Explain how a blockchain is structured. What are the blocks, what is the chain? 
  
 Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
 
+It does the work of finding a valid proof, which is required to mine a new block. A proof is created by running a brute force algorithm and constantly checking whether the proof is valid. The chain is protected because it takes a lot of computing power to come up with a proof, and altering the chain at a specific point requires someone to generate new proofs for all subsequent blocks in the chain. Someone would need 51% of the available computing power to perform an attack.
+
 ## Project Set Up
 
 #### [Hash Tables]
