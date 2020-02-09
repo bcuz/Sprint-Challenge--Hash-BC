@@ -24,22 +24,12 @@ def reconstruct_trip(tickets, length):
     sources[i] = tickets[i].source
   # print(hashtable.storage)
 
-  print(sources)
-
   k = 0
   route_index_tracker = 0
   while True:
     if k == len(sources):
-      # print(route)
-      # break
       k = 0
 
-    # if hashtable.storage[k] != None:
-    #   print((hashtable.storage[k].key), hash_table_retrieve(hashtable, hashtable.storage[k].key))  
-
-    # print(hash_table_retrieve(hashtable, sources[k]))
-
-    # if route_index_tracker == 0 and route[route_index_tracker] == None:
     if route_index_tracker == 0 and sources[k] == 'NONE':
 
     # if hash_table_retrieve(hashtable, sources[k]) == 'NONE':
@@ -49,18 +39,17 @@ def reconstruct_trip(tickets, length):
       route_index_tracker += 1
 
     # one less than the last index, cause the last index is treated different.
-    # next one < len(route)
     elif route_index_tracker > 0 and route_index_tracker < len(route) - 1:
       # needs to equal the destination of the last route
-      print(sources[k], hash_table_retrieve(hashtable, route[route_index_tracker-1]))
+      # print(sources[k], hash_table_retrieve(hashtable, route[route_index_tracker-1]))
       if sources[k] == hash_table_retrieve(hashtable, route[route_index_tracker-1]):
-        # print(5)
         # route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
         route[route_index_tracker] = hash_table_retrieve(hashtable, route[route_index_tracker-1])
         # sources[k] = None
 
-        print(route)
+        # print(route)
         route_index_tracker += 1
+    # last index
     elif route_index_tracker == len(route) - 1:
       if hash_table_retrieve(hashtable, sources[k]) == 'NONE':
 
@@ -69,34 +58,11 @@ def reconstruct_trip(tickets, length):
       # print(hash_table_retrieve(hashtable, sources[k]))
       route_index_tracker += 1        
 
-
-
-    #   if hashtable.storage[k] != None:
-    #     print(hashtable.storage[k].key)
-    #       route[route_index_tracker] = hash_table_retrieve(hashtable, hashtable.storage[k].key)
-    #       route_index_tracker += 1          
-    # # could turn into an else later
-    # elif route_index_tracker == len(route) - 1:
-    #   # will search for a destination of NONE
-    #   pass
-      
-    # print(route)      
     if route_index_tracker == len(route):
       route[route_index_tracker-1] = 'NONE'
       break
-      # print(route)
-      # route = [True]
 
     k += 1
-
-
-  # for i in range(len(hashtable.storage)):
-  #   if hashtable.storage[i] != None:
-  #     print(hashtable.storage[i].key, hash_table_retrieve(hashtable, hashtable.storage[i].key))
-
-  # while route doesnt equal ticket length
-  # start at none. if nothing in arr, get the one with none.
-  # then find the one that links to that.
 
   return route
 
@@ -118,3 +84,4 @@ tickets = [ticket_1, ticket_2, ticket_3, ticket_4, ticket_5,
 expected = ["LAX", "SFO", "BHM", "FLG", "XNA", "SAP",
             "SLC", "PIT", "ORD", "NONE"]
 result = reconstruct_trip(tickets, 10)
+print(result)
