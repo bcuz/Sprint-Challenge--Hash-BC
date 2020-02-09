@@ -16,13 +16,12 @@ def reconstruct_trip(tickets, length):
 
   # if source is None, it's the first one
   # if destination is None, it's the last one.
-  sources = []
+  sources = [None] * length
   # while true and keep looping? 
   # reset i if longer then the length
   for i in range(len(tickets)):
     hash_table_insert(hashtable, tickets[i].source, tickets[i].destination)
-    # might be able to get rid of this append
-    sources.append(tickets[i].source)
+    sources[i] = tickets[i].source
   # print(hashtable.storage)
 
   print(sources)
