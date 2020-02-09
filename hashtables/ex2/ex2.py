@@ -17,14 +17,33 @@ def reconstruct_trip(tickets, length):
   # if source is None, it's the first one
   # if destination is None, it's the last one.
 
+  # while true and keep looping? 
+  # reset i if longer then the length
   for i in range(len(tickets)):
     hash_table_insert(hashtable, tickets[i].source, tickets[i].destination)
 
-  print(hashtable.storage)
+  k = 0
+  while True and None in route:
+    if k == len(hashtable.storage):
+      k = 0
+
+    # if hashtable.storage[k] != None:
+    #   print(hashtable.storage[k].key, hash_table_retrieve(hashtable, hashtable.storage[k].key))  
+
+    # if k == len(route)-1:
+    #   route = True
+
+    k += 1
+
+  # print(hashtable.storage)
 
   # for i in range(len(hashtable.storage)):
   #   if hashtable.storage[i] != None:
   #     print(hashtable.storage[i].key, hash_table_retrieve(hashtable, hashtable.storage[i].key))
+
+  # while route doesnt equal ticket length
+  # start at none. if nothing in arr, get the one with none.
+  # then find the one that links to that.
 
   return route
 
