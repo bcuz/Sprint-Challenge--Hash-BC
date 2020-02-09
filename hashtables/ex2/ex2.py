@@ -29,7 +29,7 @@ def reconstruct_trip(tickets, length):
 
   k = 0
   route_index_tracker = 0
-  while None in route:
+  while True:
     if k == len(sources):
       # print(route)
       # break
@@ -62,11 +62,13 @@ def reconstruct_trip(tickets, length):
 
         print(route)
         route_index_tracker += 1
-    # elif route_index_tracker == len(route) - 1:
-    #   if hash_table_retrieve(hashtable, sources[k]) == 'NONE':
-    #     route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
-    #   # print(hash_table_retrieve(hashtable, sources[k]))
-    #   route_index_tracker += 1        
+    elif route_index_tracker == len(route) - 1:
+      if hash_table_retrieve(hashtable, sources[k]) == 'NONE':
+
+        # i am close. the None at the end.
+        route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
+      # print(hash_table_retrieve(hashtable, sources[k]))
+      route_index_tracker += 1        
 
 
 
@@ -80,9 +82,11 @@ def reconstruct_trip(tickets, length):
     #   pass
       
     # print(route)      
-    if k == len(route):
-      print(route)
-      route = [True]
+    if route_index_tracker == len(route):
+      route[route_index_tracker-1] = 'NONE'
+      break
+      # print(route)
+      # route = [True]
 
     k += 1
 
