@@ -21,21 +21,29 @@ def reconstruct_trip(tickets, length):
   # reset i if longer then the length
   for i in range(len(tickets)):
     hash_table_insert(hashtable, tickets[i].source, tickets[i].destination)
+  # print(hashtable.storage)
 
   k = 0
-  while True and None in route:
+  while None in route:
     if k == len(hashtable.storage):
       k = 0
 
     # if hashtable.storage[k] != None:
-    #   print(hashtable.storage[k].key, hash_table_retrieve(hashtable, hashtable.storage[k].key))  
+    #   print((hashtable.storage[k].key), hash_table_retrieve(hashtable, hashtable.storage[k].key))  
 
-    # if k == len(route)-1:
-    #   route = True
+    if route[0] == None:
+      if hashtable.storage[k] != None:
+        # print(hashtable.storage[k].key == 'None')
+        if hashtable.storage[k].key == 'NONE':
+          # print(5)
+          route[0] = hash_table_retrieve(hashtable, hashtable.storage[k].key)
+
+    if k == len(route)-1:
+      print(route)
+      route = True
 
     k += 1
 
-  # print(hashtable.storage)
 
   # for i in range(len(hashtable.storage)):
   #   if hashtable.storage[i] != None:
