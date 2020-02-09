@@ -27,39 +27,50 @@ def reconstruct_trip(tickets, length):
   k = 0
   route_index_tracker = 0
   while True:
+    # if we've gone over the entire array, 
+    # start over from the beginning
     if k == len(sources):
       k = 0
 
+    # find the ticket with the source of 'NONE'
+    # and sets it as the first element in the route arr
     if route_index_tracker == 0 and sources[k] == 'NONE':
 
     # if hash_table_retrieve(hashtable, sources[k]) == 'NONE':
       route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
       # print(hash_table_retrieve(hashtable, sources[k]))
-      # sources[k] = None
       route_index_tracker += 1
 
     # one less than the last index, cause the last index is treated different.
+
     elif route_index_tracker > 0 and route_index_tracker < len(route) - 1:
       # needs to equal the destination of the last route
+      # print(route_index_tracker)
       # print(sources[k], hash_table_retrieve(hashtable, route[route_index_tracker-1]))
+
+      # finds the destination of the last item placed in the routes arr,
+      # and adds it into the next spot of the routes arr
       if sources[k] == hash_table_retrieve(hashtable, route[route_index_tracker-1]):
         # route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
         route[route_index_tracker] = hash_table_retrieve(hashtable, route[route_index_tracker-1])
-        # sources[k] = None
 
         # print(route)
         route_index_tracker += 1
     # last index
+    # feel like i could make this more concise
     elif route_index_tracker == len(route) - 1:
-      if hash_table_retrieve(hashtable, sources[k]) == 'NONE':
+      # print(hash_table_retrieve(hashtable, route[route_index_tracker-1]))
+      # route_index_tracker += 1        
 
-        # i am close. the None at the end.
-        route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
+      if hash_table_retrieve(hashtable, route[route_index_tracker-1]) == 'NONE':
+
+        route[route_index_tracker] = hash_table_retrieve(hashtable, route[route_index_tracker-1])
       # print(hash_table_retrieve(hashtable, sources[k]))
       route_index_tracker += 1        
 
+      # print(5, route)
+
     if route_index_tracker == len(route):
-      route[route_index_tracker-1] = 'NONE'
       break
 
     k += 1
