@@ -24,23 +24,37 @@ def reconstruct_trip(tickets, length):
   # print(hashtable.storage)
 
   k = 0
+  route_index_tracker = 0
   while None in route:
-    if k == len(hashtable.storage):
+    if k == len(hashtable.storage)-1:
       k = 0
 
     # if hashtable.storage[k] != None:
     #   print((hashtable.storage[k].key), hash_table_retrieve(hashtable, hashtable.storage[k].key))  
 
-    if route[0] == None:
+    if route_index_tracker == 0 and route[route_index_tracker] == None:
       if hashtable.storage[k] != None:
         # print(hashtable.storage[k].key == 'None')
         if hashtable.storage[k].key == 'NONE':
           # print(5)
-          route[0] = hash_table_retrieve(hashtable, hashtable.storage[k].key)
+          route[route_index_tracker] = hash_table_retrieve(hashtable, hashtable.storage[k].key)
+          route_index_tracker += 1
 
-    if k == len(route)-1:
-      print(route)
-      route = True
+    elif route_index_tracker > 0 and route_index_tracker < len(route) - 1:
+      if hashtable.storage[k] != None:
+        print(hashtable.storage[k].key)
+        if hashtable.storage[k].key == route[route_index_tracker-1]:
+          route[route_index_tracker] = hash_table_retrieve(hashtable, hashtable.storage[k].key)
+          route_index_tracker += 1          
+    # could turn into an else later
+    elif route_index_tracker == len(route) - 1:
+      # will search for a destination of NONE
+      pass
+      
+    # print(route)      
+    if k == len(route):
+      # print(route)
+      route = [True]
 
     k += 1
 
