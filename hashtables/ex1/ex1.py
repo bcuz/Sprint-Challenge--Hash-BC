@@ -67,6 +67,11 @@ def get_indices_of_item_weights(weights, length, limit):
 
     counter += 1
 
+  if values[0] < values[1]:
+    temp = values[0]
+    values[0] = values[1]
+    values[1] = temp
+
   return values
 
   # print(ht.storage)
@@ -82,10 +87,10 @@ def print_answer(answer):
   else:
     print("None")
 
-# weights_2 = [4, 4]
-# answer_2 = get_indices_of_item_weights(weights_2, 2, 8)
-# print(answer_2)
+weights_2 = [4, 4]
+answer_2 = get_indices_of_item_weights(weights_2, 2, 8)
+print(answer_2)
 
-weights_3 = [4, 6, 10, 15, 16]
-answer_3 = get_indices_of_item_weights(weights_3, 5, 21)
-print(answer_3)
+# weights_3 = [4, 6, 10, 15, 16]
+# answer_3 = get_indices_of_item_weights(weights_3, 5, 21)
+# print(answer_3)
