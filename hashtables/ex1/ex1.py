@@ -8,14 +8,28 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
   ht = HashTable(16)
 
-  for i in range(len(weights)):
-    hash_table_insert(ht, i, weights[i])
+  left = 0
+  right = len(weights) - 1
 
-  # it overwrites the weight, tho, if there's a dup
-  # as it should. like the advice is flipped..
-  for i in range(len(ht.storage)):
-    if ht.storage[i] != None:
-      print(ht.storage[i].key, hash_table_retrieve(ht, ht.storage[i].key))
+  while left < right:
+    sumWeights = weights[left] + weights[right]
+    print(sumWeights)
+
+    if sumWeights == limit:
+      return (right, left)
+    elif sumWeights > limit:
+      right -= 1
+    else:
+      left += 1
+
+  # for i in range(len(weights)):
+  #   hash_table_insert(ht, i, weights[i])
+
+  # # it overwrites the weight, tho, if there's a dup
+  # # as it should. like the advice is flipped..
+  # for i in range(len(ht.storage)):
+  #   if ht.storage[i] != None:
+  #     print(ht.storage[i].key, hash_table_retrieve(ht, ht.storage[i].key))
 
   # print(ht.storage)
   # # for item in ht.storage:
@@ -24,13 +38,16 @@ def get_indices_of_item_weights(weights, length, limit):
   #   print(current.key, current.value)
   #   current = current.next
 
-  return None
-
 def print_answer(answer):
   if answer is not None:
     print(str(answer[0] + " " + answer[1]))
   else:
     print("None")
 
-weights_2 = [4, 4]
-answer_2 = get_indices_of_item_weights(weights_2, 2, 8)
+# weights_2 = [4, 4]
+# answer_2 = get_indices_of_item_weights(weights_2, 2, 8)
+# print(answer_2)
+
+weights_3 = [4, 6, 10, 15, 16]
+answer_3 = get_indices_of_item_weights(weights_3, 5, 21)
+print(answer_3)
