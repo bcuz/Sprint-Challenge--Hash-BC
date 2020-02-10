@@ -31,33 +31,43 @@ def get_indices_of_item_weights(weights, length, limit):
   #   if ht.storage[i] != None:
   #     print(ht.storage[i].key, hash_table_retrieve(ht, ht.storage[i].key))
 
+  # the keys in the hash arent order like the are in the arr.
+  # the largest index has to go first.
+
   # print(ht.storage)
 
   counter = 0
   counter2 = 0
   total = 0
-  values = []
+  values = [None] * 2
   while True:
     if counter == len(ht.storage):
       counter2 += 1
       counter = counter2
       total = 0
+      values = [None] * 2
+      
+    
+    # if there are no nones left after the first 
+    # if len(values) == 2:
 
     # print(counter)
     if ht.storage[counter] != None:
       if total == 0:
         total = hash_table_retrieve(ht, ht.storage[counter].key)
+        values[0] = ht.storage[counter].key
+        # print(values)
       else:
         current = hash_table_retrieve(ht, ht.storage[counter].key)
 
         if (total + current) == limit:
-          total += hash_table_retrieve(ht, ht.storage[counter].key)          
+          values[1] = ht.storage[counter].key          
+          # total += hash_table_retrieve(ht, ht.storage[counter].key)          
           break
 
     counter += 1
 
-  print(total)
-
+  return values
 
   # print(ht.storage)
   # # for item in ht.storage:
