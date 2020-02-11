@@ -32,12 +32,17 @@ def get_indices_of_item_weights(weights, length, limit):
 
     if counter == len(weights):
       counter2 += 1
+      # counter starts at 0th element and checks each element to the right,
+      # then starts at the 1th element repeats the process from there, and so on
       counter = counter2
       total = 0
-      values = [None] * 2      
+      values = [None] * 2
 
     # print(counter)
     # if ht.storage[counter] != None:
+
+    # will always store the current element being looked at as 
+    # the first element in the values array.
     if total == 0:
       total = hash_table_retrieve(ht, counter)
       # print(total == 7, counter
@@ -46,6 +51,7 @@ def get_indices_of_item_weights(weights, length, limit):
     else:
       current = hash_table_retrieve(ht, counter)
 
+      # add starter index to other element to check if it equals the limit
       if (total + current) == limit:
         values[1] = counter          
         # total += hash_table_retrieve(ht, ht.storage[counter].key)          
