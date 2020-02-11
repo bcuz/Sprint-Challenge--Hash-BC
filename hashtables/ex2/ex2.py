@@ -50,12 +50,12 @@ def reconstruct_trip(tickets, length):
 
       # finds the destination of the last item placed in the routes arr,
       # and adds it into the next spot of the routes arr
-      if sources[k] == hash_table_retrieve(hashtable, route[route_index_tracker-1]):
+      # if sources[k] == hash_table_retrieve(hashtable, route[route_index_tracker-1]):
         # route[route_index_tracker] = hash_table_retrieve(hashtable, sources[k])
-        route[route_index_tracker] = hash_table_retrieve(hashtable, route[route_index_tracker-1])
+      route[route_index_tracker] = hash_table_retrieve(hashtable, route[route_index_tracker-1])
 
-        # print(route)
-        route_index_tracker += 1
+      # print(route)
+      route_index_tracker += 1
     # last index
     # feel like i could make this more concise
     elif route_index_tracker == len(route) - 1:
