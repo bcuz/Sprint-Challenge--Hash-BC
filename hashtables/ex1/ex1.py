@@ -8,20 +8,6 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
   ht = HashTable(16)
 
-  # left = 0
-  # right = len(weights) - 1
-
-  # while left < right:
-  #   sumWeights = weights[left] + weights[right]
-  #   print(sumWeights)
-
-  #   if sumWeights == limit:
-  #     return (right, left)
-  #   elif sumWeights > limit:
-  #     right -= 1
-  #   else:
-  #     left += 1
-
   for i in range(len(weights)):
     hash_table_insert(ht, i, weights[i])
 
@@ -49,15 +35,12 @@ def get_indices_of_item_weights(weights, length, limit):
       counter = counter2
       total = 0
       values = [None] * 2      
-    
-    # if there are no nones left after the first 
-    # if len(values) == 2:
 
     # print(counter)
     # if ht.storage[counter] != None:
     if total == 0:
       total = hash_table_retrieve(ht, counter)
-      # print(total == 7, counter)
+      # print(total == 7, counter
       values[0] = counter
       # print(values)
     else:
