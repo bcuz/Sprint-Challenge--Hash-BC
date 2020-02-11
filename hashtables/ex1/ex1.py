@@ -22,7 +22,7 @@ def get_indices_of_item_weights(weights, length, limit):
 
   # print(ht.storage)
 
-  counter = 0
+  current_index = 0
   counter2 = 0
   total = 0
   values = [None] * 2
@@ -30,34 +30,34 @@ def get_indices_of_item_weights(weights, length, limit):
     if len(weights) == 1:
       return None
 
-    if counter == len(weights):
+    if current_index == len(weights):
       counter2 += 1
-      # counter starts at 0th element and checks each element to the right,
+      # current_index starts at 0th element and checks each element to the right,
       # then starts at the 1th element repeats the process from there, and so on
-      counter = counter2
+      current_index = counter2
       total = 0
       values = [None] * 2
 
-    # print(counter)
-    # if ht.storage[counter] != None:
+    # print(current_index)
+    # if ht.storage[current_index] != None:
 
     # will always store the current element being looked at as 
     # the first element in the values array.
     if total == 0:
-      total = hash_table_retrieve(ht, counter)
-      # print(total == 7, counter
-      values[0] = counter
+      total = hash_table_retrieve(ht, current_index)
+      # print(total == 7, current_index
+      values[0] = current_index
       # print(values)
     else:
-      current = hash_table_retrieve(ht, counter)
+      current = hash_table_retrieve(ht, current_index)
 
       # add starter index to other element to check if it equals the limit
       if (total + current) == limit:
-        values[1] = counter          
-        # total += hash_table_retrieve(ht, ht.storage[counter].key)          
+        values[1] = current_index          
+        # total += hash_table_retrieve(ht, ht.storage[current_index].key)          
         break
 
-    counter += 1
+    current_index += 1
 
   if values[0] < values[1]:
     temp = values[0]
