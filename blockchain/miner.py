@@ -38,6 +38,7 @@ def proof_of_work(last_proof):
     proof = 0
     while valid_proof(hash_string, proof) is False:
         proof -= .01
+        break
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -53,6 +54,11 @@ def valid_proof(last_hash, proof):
     """
     guess = json.dumps(proof)
     # guess = f'{last_hash}{proof}'.encode()
+
+    # hash(last_proof, proof)
+    # hash the last_proof and the attempted proof together
+    # then check to see if it has the required zeros
+
     guess = guess.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
     return last_hash[-6:] == guess_hash[:6]
@@ -65,6 +71,8 @@ if __name__ == '__main__':
         node = "https://lambda-treasure-hunt.herokuapp.com/api/bc"
 
     coins_mined = 0
+    API_KEY = "7f6bac04cc4a8d45ace3d6c8b6a353202b6cf1de"
+    headers = {"Authorization": f"Token {API_KEY}"}
 
     # Load or create ID
     f = open("my_id.txt", "r")
@@ -78,8 +86,9 @@ if __name__ == '__main__':
     # Run forever until interrupted
     while True:
         # Get the last proof from the server
-        r = requests.get(url=node + "/last_proof")
+        r = requests.get(url=node + "/last_proof", headers=headers)
         data = r.json()
+        # first i can get all the data i need
         new_proof = proof_of_work(data.get('proof'))
 
         post_data = {"proof": new_proof}
