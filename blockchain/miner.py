@@ -62,7 +62,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        node = "https://lambda-coin.herokuapp.com/api"
+        node = "https://lambda-treasure-hunt.herokuapp.com/api/bc"
 
     coins_mined = 0
 
