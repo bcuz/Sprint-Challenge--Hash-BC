@@ -28,23 +28,15 @@ def proof_of_work(data):
 
     last_proof = data["proof"]
     difficulty = data["difficulty"]
+    # start at a random point
     proof = last_proof* random.randint(0, 100)
-    # string_object = json.dumps(last_proof)
-    # Create the block_string
-    # block_string = string_object.encode()
-
-    # hash_object = hashlib.sha256(block_string)
-    # hash_string = hash_object.hexdigest()
-
-    # use a random integer.
 
     valid_proof(last_proof, difficulty, proof)
-    # while valid_proof(last_proof, difficulty proof) is False:
+    # while valid_proof(last_proof, difficulty, proof) is False:
     #     proof += 1
-    #     break
 
-    # print("Proof found: " + str(proof) + " in " + str(timer() - start))
-    # return proof
+    print("Proof found: " + str(proof) + " in " + str(timer() - start))
+    return proof
 
 
 def valid_proof(last_proof, difficulty, proof):
@@ -55,9 +47,6 @@ def valid_proof(last_proof, difficulty, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-    # guess = f'{last_hash}{proof}'.encode()
-
-    # hash(last_proof, proof)
     # hash the last_proof and the attempted proof together
     # then check to see if it has the required zeros
 
@@ -98,12 +87,13 @@ if __name__ == '__main__':
         new_proof = proof_of_work(data)
 
         break
-        # post_data = {"proof": new_proof}
 
-        # r = requests.post(url=node + "/mine", json=post_data)
-        # data = r.json()
-        # if data.get('message') == 'New Block Forged':
-        #     coins_mined += 1
-        #     print("Total coins mined: " + str(coins_mined))
-        # else:
-        #     print(data.get('message'))
+        post_data = {"proof": new_proof}
+
+        r = requests.post(url=node + "/mine", json=post_data)
+        data = r.json()
+        if data.get('message') == 'New Block Forged':
+            coins_mined += 1
+            print("Total coins mined: " + str(coins_mined))
+        else:
+            print(data.get('message'))
