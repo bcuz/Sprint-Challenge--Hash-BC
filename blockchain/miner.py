@@ -9,9 +9,14 @@ from uuid import uuid4
 from timeit import default_timer as timer
 
 import random
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-def proof_of_work(last_proof):
+def proof_of_work(data):
     """
     Multi-Ouroboros of Work Algorithm
     - Find a number p' such that the last six digits of hash(p) are equal
@@ -25,25 +30,21 @@ def proof_of_work(last_proof):
 
     print("Searching for next proof")
 
-    # need to hash the last proof
 
-    string_object = json.dumps(last_proof)
-    # Create the block_string
-    block_string = string_object.encode()
+    last_proof = data["proof"]
+    difficulty = data["difficulty"]
+    # start at a random point
+    proof = last_proof* random.randint(0, 100)
 
-    hash_object = hashlib.sha256(block_string)
-    hash_string = hash_object.hexdigest()
-
-    # use a random integer.
-    proof = 0
-    while valid_proof(hash_string, proof) is False:
-        proof -= .01
+    valid_proof(last_proof, difficulty, proof)
+    # while valid_proof(last_proof, difficulty, proof) is False:
+    #     proof += 1
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
 
-def valid_proof(last_hash, proof):
+def valid_proof(last_proof, difficulty, proof):
     """
     Validates the Proof:  Multi-ouroborus:  Do the last six characters of
     the hash of the last proof match the first six characters of the hash
@@ -51,20 +52,26 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-    guess = json.dumps(proof)
-    # guess = f'{last_hash}{proof}'.encode()
-    guess = guess.encode()
+    # hash the last_proof and the attempted proof together
+    # then check to see if it has the required zeros
+
+    zeros = '0' * difficulty    
+
+    guess = f'{last_proof}{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
-    return last_hash[-6:] == guess_hash[:6]
+    print(guess_hash)
+    return guess_hash[:difficulty] == zeros
 
 if __name__ == '__main__':
     # What node are we interacting with?
     if len(sys.argv) > 1:
         node = sys.argv[1]
     else:
-        node = "https://lambda-coin.herokuapp.com/api"
+        node = "https://lambda-treasure-hunt.herokuapp.com/api/bc"
 
     coins_mined = 0
+    API_KEY = os.getenv("API_KEY")
+    headers = {"Authorization": f"Token {API_KEY}"}
 
     # Load or create ID
     f = open("my_id.txt", "r")
@@ -78,12 +85,15 @@ if __name__ == '__main__':
     # Run forever until interrupted
     while True:
         # Get the last proof from the server
-        r = requests.get(url=node + "/last_proof")
+        r = requests.get(url=node + "/last_proof", headers=headers)
         data = r.json()
-        new_proof = proof_of_work(data.get('proof'))
+        # first i can get all the data i need
 
-        post_data = {"proof": new_proof,
-                     "id": id}
+        new_proof = proof_of_work(data)
+
+        break
+
+        post_data = {"proof": new_proof}
 
         r = requests.post(url=node + "/mine", json=post_data)
         data = r.json()
