@@ -11,7 +11,7 @@ from timeit import default_timer as timer
 import random
 
 
-def proof_of_work(last_proof):
+def proof_of_work(data):
     """
     Multi-Ouroboros of Work Algorithm
     - Find a number p' such that the last six digits of hash(p) are equal
@@ -25,26 +25,29 @@ def proof_of_work(last_proof):
 
     print("Searching for next proof")
 
-    # need to hash the last proof
-
-    string_object = json.dumps(last_proof)
+    last_proof = data["proof"]
+    difficulty = data["difficulty"]
+    # string_object = json.dumps(last_proof)
     # Create the block_string
-    block_string = string_object.encode()
+    # block_string = string_object.encode()
 
-    hash_object = hashlib.sha256(block_string)
-    hash_string = hash_object.hexdigest()
+    # hash_object = hashlib.sha256(block_string)
+    # hash_string = hash_object.hexdigest()
 
     # use a random integer.
+
+    print(data["proof"], data["difficulty"])
+
     proof = 0
     while valid_proof(hash_string, proof) is False:
         proof -= .01
         break
 
-    print("Proof found: " + str(proof) + " in " + str(timer() - start))
-    return proof
+    # print("Proof found: " + str(proof) + " in " + str(timer() - start))
+    # return proof
 
 
-def valid_proof(last_hash, proof):
+def valid_proof(last_proof, difficulty, proof):
     """
     Validates the Proof:  Multi-ouroborus:  Do the last six characters of
     the hash of the last proof match the first six characters of the hash
@@ -89,14 +92,16 @@ if __name__ == '__main__':
         r = requests.get(url=node + "/last_proof", headers=headers)
         data = r.json()
         # first i can get all the data i need
-        new_proof = proof_of_work(data.get('proof'))
 
-        post_data = {"proof": new_proof}
+        new_proof = proof_of_work(data)
 
-        r = requests.post(url=node + "/mine", json=post_data)
-        data = r.json()
-        if data.get('message') == 'New Block Forged':
-            coins_mined += 1
-            print("Total coins mined: " + str(coins_mined))
-        else:
-            print(data.get('message'))
+        break
+        # post_data = {"proof": new_proof}
+
+        # r = requests.post(url=node + "/mine", json=post_data)
+        # data = r.json()
+        # if data.get('message') == 'New Block Forged':
+        #     coins_mined += 1
+        #     print("Total coins mined: " + str(coins_mined))
+        # else:
+        #     print(data.get('message'))
