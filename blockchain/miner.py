@@ -25,8 +25,10 @@ def proof_of_work(data):
 
     print("Searching for next proof")
 
+
     last_proof = data["proof"]
     difficulty = data["difficulty"]
+    proof = last_proof* random.randint(0, 100)
     # string_object = json.dumps(last_proof)
     # Create the block_string
     # block_string = string_object.encode()
@@ -36,12 +38,10 @@ def proof_of_work(data):
 
     # use a random integer.
 
-    print(data["proof"], data["difficulty"])
-
-    proof = 0
-    while valid_proof(hash_string, proof) is False:
-        proof -= .01
-        break
+    valid_proof(last_proof, difficulty, proof)
+    # while valid_proof(last_proof, difficulty proof) is False:
+    #     proof += 1
+    #     break
 
     # print("Proof found: " + str(proof) + " in " + str(timer() - start))
     # return proof
@@ -55,16 +55,18 @@ def valid_proof(last_proof, difficulty, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-    guess = json.dumps(proof)
     # guess = f'{last_hash}{proof}'.encode()
 
     # hash(last_proof, proof)
     # hash the last_proof and the attempted proof together
     # then check to see if it has the required zeros
 
-    guess = guess.encode()
+    zeros = '0' * difficulty    
+
+    guess = f'{last_proof}{proof}'.encode()
     guess_hash = hashlib.sha256(guess).hexdigest()
-    return last_hash[-6:] == guess_hash[:6]
+    print(guess_hash)
+    return guess_hash[:difficulty] == zeros
 
 if __name__ == '__main__':
     # What node are we interacting with?
