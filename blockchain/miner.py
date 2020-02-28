@@ -27,16 +27,15 @@ def proof_of_work(last_proof):
 
     # need to hash the last proof
 
-    string_object = json.dumps(last_proof)
+    # string_object = json.dumps(last_proof)
     # Create the block_string
-    block_string = string_object.encode()
+    last_encoded = f'{last_proof}'.encode()
 
-    hash_object = hashlib.sha256(block_string)
-    hash_string = hash_object.hexdigest()
+    last_hash = hashlib.sha256(last_encoded).hexdigest()
 
     # use a random integer.
     proof = 0
-    while valid_proof(hash_string, proof) is False:
+    while valid_proof(last_hash, proof) is False:
         proof -= .01
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
@@ -51,10 +50,8 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-    guess = json.dumps(proof)
-    # guess = f'{last_hash}{proof}'.encode()
-    guess = guess.encode()
-    guess_hash = hashlib.sha256(guess).hexdigest()
+    guess_encoded = f'{proof}'.encode()
+    guess_hash = hashlib.sha256(guess_encoded).hexdigest()
     return last_hash[-6:] == guess_hash[:6]
 
 if __name__ == '__main__':
